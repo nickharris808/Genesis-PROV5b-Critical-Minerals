@@ -1,0 +1,66 @@
+{
+  "_meta": {
+    "description": "Canonical reference values for PROV 5b Critical Minerals verification",
+    "version": "1.0.0",
+    "date": "2026-02-18",
+    "source": "Genesis PROV 5 Smart Matter -- DFT campaign, Kremser model, ML surrogates",
+    "classification": "NON-CONFIDENTIAL"
+  },
+  "separation_factors": {
+    "janus_separation_factor": 11000,
+    "janus_separation_factor_unit": "dimensionless (Nd/Fe selectivity)",
+    "janus_separation_factor_note": "Champion structure, thermodynamic DFT prediction. Practical alpha with correction factors: 3.3-7.5",
+    "p507_separation_factor": 2.5,
+    "p507_separation_factor_unit": "dimensionless (Nd/Fe selectivity)",
+    "p507_separation_factor_source": "Gupta & Krishnamurthy 2005"
+  },
+  "kremser_stages": {
+    "kremser_stages_p507": 29.2,
+    "kremser_stages_p507_note": "Full separation train for NdFeB scrap, 99.9% Nd purity, 80% stage efficiency",
+    "kremser_stages_janus": 8.5,
+    "kremser_stages_janus_note": "At champion separation factor, full separation train"
+  },
+  "economics": {
+    "capex_reduction_pct": 70.8,
+    "capex_reduction_note": "At champion SF. Defensible range with practical correction: 20-40%",
+    "capex_per_stage_M": 5.0,
+    "capex_per_stage_source": "MINTEK 2023",
+    "auxiliary_overhead_pct": 40
+  },
+  "ml_surrogate": {
+    "ml_ridge_r_squared": 0.966,
+    "ml_model_version": "v8",
+    "ml_features": "ECFP4 (1024-bit) + MACCS (167-bit) + 15 physicochemical + 5 metal + temperature = 1212 total",
+    "ml_cv_method": "Ligand-out GroupKFold + Metal-out GroupKFold + Standard 5-fold"
+  },
+  "dft_campaign": {
+    "dft_verified": 58,
+    "dft_total": 58,
+    "dft_verified_note": "58/58 forensic match with cloud task IDs",
+    "dft_expanded": 200,
+    "dft_expanded_note": "200+ calculations across 15 metals, 20 ligands, 5 temperatures, 2 solvents",
+    "dft_method": "B3LYP/6-31G*",
+    "dft_reference_method": "CP2K PBE/DZVP-MOLOPT-PBE-GTH/D3",
+    "dft_dispersion": "D3 (Grimme)",
+    "dft_solvation": "CPCM implicit"
+  },
+  "molecular_library": {
+    "verified_structures": 730,
+    "verified_structures_note": "730/730 valid structures verified by RDKit sanitization and property filters",
+    "library_v2_structures": 120,
+    "library_v2_note": "6 head groups, 10 tails, 4 linkers",
+    "total_structures": 850
+  },
+  "kremser_sensitivity": {
+    "alpha_conservative": 3.35,
+    "stages_conservative": 6.41,
+    "capex_savings_conservative_pct": 20,
+    "alpha_moderate": 5.02,
+    "stages_moderate": 5.14,
+    "capex_savings_moderate_pct": 30,
+    "alpha_optimistic": 7.52,
+    "stages_optimistic": 4.35,
+    "capex_savings_optimistic_pct": 40,
+    "practical_correction_range": "gamma = 0.3-0.5 (Rydberg 2004)"
+  }
+}

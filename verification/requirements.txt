@@ -1,0 +1,5 @@
+# Genesis PROV 5b: Critical Minerals -- Verification Dependencies
+# The verification script (verify_claims.py) uses only the Python standard library.
+# No external packages are required.
+#
+# Python >= 3.8

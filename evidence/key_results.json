@@ -1,0 +1,107 @@
+{
+  "_meta": {
+    "description": "Key results summary for Genesis PROV 5b Critical Mineral Separation",
+    "version": "1.0.0",
+    "date": "2026-02-18",
+    "classification": "NON-CONFIDENTIAL",
+    "note": "All results are computational. No experimental validation exists."
+  },
+  "janus_ligand_discovery": {
+    "total_structures": 730,
+    "library_v2_structures": 120,
+    "combined_structures": 850,
+    "structure_validation": "730/730 passed RDKit sanitization and property filters",
+    "head_group_families": 6,
+    "tail_chemistries": 10,
+    "linker_types": 4,
+    "logP_operating_window": "3.0-6.0"
+  },
+  "dft_campaign": {
+    "verified_calculations": 58,
+    "verified_convergence": "58/58 (100%)",
+    "verified_method": "CP2K PBE/DZVP-MOLOPT-PBE-GTH with D3 dispersion",
+    "expanded_calculations": "200+",
+    "expanded_method": "B3LYP/6-31G* with D3BJ, CPCM solvation",
+    "metals_covered": 16,
+    "metals_list": ["La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Fe"],
+    "ligands_screened": 20,
+    "temperatures": 5,
+    "solvents": 2,
+    "forensic_audit": "All 58 verified calculations have unique cloud task IDs"
+  },
+  "separation_performance": {
+    "champion_separation_factor": {
+      "value": 11000,
+      "pair": "Nd/Fe",
+      "basis": "DFT isodesmic reaction + Boltzmann conversion",
+      "caveat": "Thermodynamic prediction. Practical alpha with correction: 3.3-7.5"
+    },
+    "p507_baseline": {
+      "value": 2.5,
+      "pair": "Nd/Fe",
+      "source": "Gupta & Krishnamurthy 2005"
+    },
+    "improvement_factor": 4400
+  },
+  "kremser_analysis": {
+    "p507_stages": 29.2,
+    "janus_stages_champion": 8.5,
+    "capex_reduction_champion_pct": 70.8,
+    "practical_range": {
+      "conservative": {"alpha": 3.35, "stages": 6.41, "capex_savings_pct": 20},
+      "moderate": {"alpha": 5.02, "stages": 5.14, "capex_savings_pct": 30},
+      "optimistic": {"alpha": 7.52, "stages": 4.35, "capex_savings_pct": 40}
+    },
+    "assumptions": {
+      "feed": "NdFeB scrap, Fe:Nd ~ 99:1",
+      "product_purity": "99.9% Nd",
+      "stage_efficiency": 0.80,
+      "safety_factor": 1.2,
+      "cost_per_stage_M_USD": 5.0,
+      "auxiliary_overhead_pct": 40
+    }
+  },
+  "ml_surrogate": {
+    "model_version": "v8",
+    "ridge_r_squared": 0.966,
+    "feature_count": 1212,
+    "feature_breakdown": {
+      "ECFP4_fingerprint": 1024,
+      "MACCS_keys": 167,
+      "physicochemical_descriptors": 15,
+      "metal_properties": 5,
+      "temperature": 1
+    },
+    "cross_validation": {
+      "standard_5fold": true,
+      "ligand_out_GroupKFold": true,
+      "metal_out_GroupKFold": true
+    },
+    "v7_bug_fixed": "One-hot ligand encoding replaced with molecular fingerprints. Ligand differentiation now proven."
+  },
+  "strategic_context": {
+    "china_ree_processing_share": ">90%",
+    "us_domestic_separation_capacity": "0 tpa",
+    "dod_annual_ree_consumption_mt": 3800,
+    "executive_order": "EO 14017 (America's Supply Chains)",
+    "global_ree_market_projection": "$50B+ by 2030"
+  },
+  "patent_coverage": {
+    "total_claims": 95,
+    "claim_families": 13,
+    "independent_claims": 16,
+    "dependent_claims": 79,
+    "ree_relevant_claims": 39,
+    "blocking_claims": 5
+  },
+  "honest_limitations": [
+    "All results are computational -- no experimental validation",
+    "730 structures designed, not synthesized",
+    "DFT at B3LYP/6-31G* level -- standard but not high-accuracy",
+    "Kremser model is first-principles but uses estimated practical corrections",
+    "ML surrogate trained on simulated data, not experimental measurements",
+    "No pilot plant data exists",
+    "70.8% CapEx figure is optimistic upper bound; defensible range is 20-40%",
+    "Inter-lanthanide separations (Nd/Pr) harder than Nd/Fe"
+  ]
+}
