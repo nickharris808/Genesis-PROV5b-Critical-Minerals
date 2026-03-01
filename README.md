@@ -48,7 +48,7 @@ Genesis PROV 5b presents a computationally-discovered solution: **Janus Ligands*
 
 - **Separation factors exceeding 10,000** for Nd/Fe (compared to P507's 2.5) -- a 4,400x improvement
 - **Stage reduction from 29.2 to approximately 8.5** (71% fewer mixer-settler units)
-- **CapEx reduction of 20-40%** (conservative to optimistic practical range) to **70.8%** (at champion DFT selectivity)
+- **CapEx reduction of 20-40%** vs D2EHPA baseline (alpha-dependent, not experimentally validated). The 70.8% figure compares against TBP (alpha=1.5), not the correct industrial baseline D2EHPA (alpha=2.5).
 - **ML surrogate with R-squared = 0.966** enabling rapid screening of the full molecular library
 - **97% of library structures synthetically accessible** (SA score < 3.0, "easy" category)
 - **Break-even economics favoring Janus** even at conservative alpha = 3.3, with $1.87M to $3.27M annual operating cost savings versus D2EHPA
@@ -283,7 +283,7 @@ Using the validated Kremser model with practical correction factors:
 
 The full 18-point sensitivity analysis (alpha = 1.5 to 10.0) demonstrates that the Janus Ligand enters "VIABLE" territory at alpha = 3.0 and "EXCELLENT" territory at alpha = 5.0. Even the most conservative practical estimate (alpha = 3.35) delivers a 20% CapEx savings -- $14M at a 1,000 tpa facility.
 
-At the champion separation factor (>10,000), the theoretical stage count drops to approximately 8.5 for the full separation train, yielding an estimated 70.8% CapEx reduction. This figure assumes the DFT-predicted thermodynamic selectivity translates to practical mixer-settler performance -- an assumption that requires experimental validation.
+At the champion separation factor (>10,000), the theoretical stage count drops to approximately 8.5 for the full separation train. Note: the 70.8% CapEx figure compares against TBP (alpha=1.5), not the industrial D2EHPA baseline (alpha=2.5). Against D2EHPA, the realistic range is 20-40% depending on achieved alpha. No experimental liquid-liquid extraction has been performed.
 
 ### 3.5 ML Surrogate Performance
 
@@ -916,7 +916,7 @@ The primary application is a domestic rare earth separation facility capable of 
 - **Capacity:** 1,000 - 5,000 tpa separated REO
 - **Feedstock:** NdFeB scrap, monazite/bastnaesite concentrates from Mountain Pass (CA), Round Top (TX), Bear Lodge (WY), Pea Ridge (MO)
 - **Product:** 99.9%+ individual REO (Nd2O3, Pr6O11, Dy2O3, Tb4O7)
-- **CapEx Advantage:** 20-40% reduction (conservative) to 70.8% (champion) versus conventional P507 plants
+- **CapEx Advantage:** 20-40% reduction vs D2EHPA (alpha-dependent, not experimentally validated)
 - **Timeline to first product:** Estimated 18-24 months from groundbreaking (vs. 3-5 years for conventional P507 plants, based on Lynas/Energy Fuels timelines)
 
 ### 10.2 DoD Supply Chain Security
@@ -1025,7 +1025,7 @@ The PROV 5 Smart Matter patent portfolio covers three converging technology area
 
 **Family 4: Computational Discovery Engine (Claims 39-52)**
 - Type: Method
-- Strength: STRONG (ML v8 + 200+ DFT + molecular fingerprints + ligand-out CV)
+- Strength: STRONG (ML v8 + 200+ DFT-calibrated energy estimates (58 verified CP2K) + molecular fingerprints + ligand-out CV)
 - Scope: DFT-guided combinatorial molecular discovery with ML surrogates
 - Impact: Protects the discovery pipeline itself, not just the discovered molecules
 
