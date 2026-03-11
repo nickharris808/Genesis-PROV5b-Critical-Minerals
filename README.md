@@ -4,7 +4,7 @@
 ![Verification: 5/5 Passing](https://img.shields.io/badge/Verification-5%2F5_Passing-brightgreen)
 ![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC_BY--NC--ND_4.0-lightgrey)
 ![Claims: 95 across 13 families](https://img.shields.io/badge/Patent_Claims-95_across_13_families-orange)
-![DFT Calculations: 258+](https://img.shields.io/badge/DFT_Calculations-258%2B-purple)
+![DFT Calculations: 58 verified + 166 calibrated](https://img.shields.io/badge/DFT_Calculations-58_verified_%2B_166_calibrated-purple)
 ![Molecular Library: 850+](https://img.shields.io/badge/Molecular_Library-850%2B_structures-teal)
 
 **Status:** Computational Discovery -- Validated by DFT, Kremser Thermodynamics, and ML Surrogates
@@ -44,7 +44,7 @@ The bottleneck is not mining. The United States, Australia, and Canada have adeq
 
 This is the 29.2-stage problem. It is why no Western company has built a competitive REE separation facility in over two decades, despite abundant domestic ore.
 
-Genesis PROV 5b presents a computationally-discovered solution: **Janus Ligands** -- bifunctional molecular architectures with a precision chelating head and organic-phase-soluble tail. Our computational campaign of **850+ verified molecular structures** (730 base library + 120 v2 candidates), **258+ DFT calculations** (58 forensically-audited reference calculations + 200+ expanded campaign), and a validated Kremser thermodynamic model demonstrates a path to:
+Genesis PROV 5b presents a computationally-discovered solution: **Janus Ligands** -- bifunctional molecular architectures with a precision chelating head and organic-phase-soluble tail. Our computational campaign of **850+ verified molecular structures** (730 base library + 120 v2 candidates), **224 DFT-calibrated energy estimates** (58 forensically-audited CP2K reference calculations + 166 DFT-calibrated estimates via physics-model extrapolations), and a validated Kremser thermodynamic model demonstrates a path to:
 
 - **Separation factors exceeding 10,000** for Nd/Fe (compared to P507's 2.5) -- a 4,400x improvement
 - **Stage reduction from 29.2 to approximately 8.5** (71% fewer mixer-settler units)
@@ -343,8 +343,8 @@ flowchart LR
     subgraph COMPUTE ["Quantum Chemistry"]
         direction TB
         LIB --> DFT58["58 Reference DFT<br/>CP2K PBE/DZVP-GTH"]
-        DFT58 --> DFT200["200+ Production DFT<br/>B3LYP/6-31G* + D3BJ"]
-        DFT200 --> BIND["Binding Energies<br/>Delta-G per<br/>metal-ligand pair"]
+        DFT58 --> DFT166["166 Calibrated Estimates<br/>B3LYP/6-31G* + D3BJ"]
+        DFT166 --> BIND["Binding Energies<br/>Delta-G per<br/>metal-ligand pair"]
     end
 
     subgraph PREDICT ["ML + Economics"]
@@ -479,7 +479,7 @@ Density Functional Theory calculations form the foundation of all binding energy
 - **Purpose:** Forensically-verified anchor points with unique cloud task IDs, full convergence documentation, and archived input/output files
 - **Convergence:** 58/58 (100%) converged to specified energy tolerance
 
-**Production Calculations (200+ structures):**
+**Production Calculations (166 DFT-calibrated estimates):**
 - **Functional:** B3LYP (hybrid, 20% exact exchange)
 - **Basis set:** 6-31G* (split-valence with d polarization on heavy atoms)
 - **Dispersion:** D3BJ (Becke-Johnson damping)
@@ -610,8 +610,8 @@ At every scenario -- conservative, moderate, and optimistic -- the Janus Ligand 
 | Reference DFT method | CP2K PBE/DZVP-MOLOPT-PBE-GTH + D3 |
 | Production DFT method | B3LYP/6-31G* + D3BJ + CPCM |
 | Reference calculations (forensic) | 58 |
-| Expanded calculations | 200+ |
-| Total DFT calculations | 258+ |
+| Expanded calculations | 166 (DFT-calibrated estimates via physics-model extrapolations) |
+| Total DFT calculations | 224 (58 verified + 166 calibrated) |
 | Metals covered | 16 (La, Ce, Pr, Nd, Pm, Sm, Eu, Gd, Tb, Dy, Ho, Er, Tm, Yb, Lu, Fe) |
 | Ligands screened | 20 |
 | Temperatures | 5 |
@@ -860,7 +860,7 @@ All 58 reference DFT calculations have been forensically audited:
 - Input geometries, convergence criteria, and output energies are archived
 - 58/58 calculations converged to the specified energy tolerance (no outliers, no unconverged runs)
 - No post-hoc adjustment of any computed value
-- The expanded dataset of 200+ calculations was calibrated against these 58 anchor points via linear regression, with the calibration coefficients archived
+- The expanded dataset of 166 DFT-calibrated estimates was calibrated against these 58 anchor points via linear regression, with the calibration coefficients archived
 
 **Convergence criteria used:**
 - SCF energy convergence: 1.0e-7 Ha
@@ -1013,7 +1013,7 @@ The PROV 5 Smart Matter patent portfolio covers three converging technology area
 
 **Family 1: Janus Ligands for Rare Earth Extraction (Claims 1-15)**
 - Type: Composition of Matter
-- Strength: STRONG (730 structures + 58 verified DFT + 200 expanded DFT)
+- Strength: STRONG (730 structures + 58 verified DFT + 166 DFT-calibrated estimates)
 - Scope: Bifunctional ligand architecture with chelating head and organic-soluble tail
 - Blocking claims: Claim 7 (selectivity threshold excludes all prior art), Claim 14 (logP window defines the only viable operating space)
 
@@ -1025,7 +1025,7 @@ The PROV 5 Smart Matter patent portfolio covers three converging technology area
 
 **Family 4: Computational Discovery Engine (Claims 39-52)**
 - Type: Method
-- Strength: STRONG (ML v8 + 200+ DFT-calibrated energy estimates (58 verified CP2K) + molecular fingerprints + ligand-out CV)
+- Strength: STRONG (ML v8 + 166 DFT-calibrated estimates + molecular fingerprints + ligand-out CV)
 - Scope: DFT-guided combinatorial molecular discovery with ML surrogates
 - Impact: Protects the discovery pipeline itself, not just the discovered molecules
 
@@ -1047,7 +1047,7 @@ The PROV 5 Smart Matter patent portfolio covers three converging technology area
 
 | Claim Family | Evidence Type | Dataset Size | Verification |
 |-------------|--------------|-------------|-------------|
-| Janus Ligands (1-15) | DFT binding energies | 58 verified + 200 expanded | 58/58 forensic match |
+| Janus Ligands (1-15) | DFT binding energies | 58 verified + 166 calibrated estimates | 58/58 forensic match |
 | Janus Ligands (1-15) | Molecular structures | 730 + 120 v2 | 730/730 valid |
 | Ion-Selective Membranes (29-38) | PMF calculations | 5 ions x 8 pore diameters | 10 ns/window, <10% uncertainty |
 | Computational Discovery (39-52) | ML surrogate | Ridge R-squared = 0.966 | Ligand-out CV validated |

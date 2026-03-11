@@ -69,7 +69,7 @@ This document describes the architecture, inputs, outputs, and physical basis of
 
 **Physical Basis:** Density Functional Theory solves the Kohn-Sham equations to obtain the electronic ground state energy. The binding energy is the difference between the complex energy and the sum of isolated metal and ligand energies, corrected for basis set superposition error and solvation.
 
-**Scale:** 58 verified calculations (forensic-grade) + 200+ expanded calculations.
+**Scale:** 58 verified calculations (forensic-grade) + 166 DFT-calibrated estimates (physics-model extrapolations).
 
 ---
 
@@ -144,7 +144,7 @@ Building Blocks --> [Generator] --> 730+ Candidates
                                    [DFT Engine]
                                         |
                               58 verified energies
-                              200+ expanded energies
+                              166 calibrated estimates
                                         |
                                [ML Surrogate v8]
                                         |

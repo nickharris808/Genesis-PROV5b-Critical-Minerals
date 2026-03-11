@@ -21,7 +21,7 @@ Until that synthesis is completed, all performance claims carry the qualifier: "
 All DFT calculations use one of two levels of theory:
 
 - **58 verified calculations:** CP2K with PBE functional, DZVP-MOLOPT-PBE-GTH basis set, D3 dispersion correction. These are the forensically-audited anchor points with cloud task IDs.
-- **200+ expanded calculations:** B3LYP functional with 6-31G* basis set, D3BJ dispersion correction, CPCM implicit solvation. These are calibrated against the 58 CP2K reference points.
+- **166 DFT-calibrated estimates:** B3LYP functional with 6-31G* basis set, D3BJ dispersion correction, CPCM implicit solvation. These are calibrated against the 58 CP2K reference points via physics-model extrapolations.
 
 ### Known DFT Limitations
 
@@ -82,7 +82,7 @@ The machine learning surrogate model (Ridge regression, R-squared = 0.966) is tr
 ### Training Data Limitations
 
 - **58 verified samples** form the anchor dataset. This is a small training set by ML standards.
-- **200+ expanded calculations** increase coverage but use calibrated physics models, not raw CP2K output. True model improvement requires HPC cluster runs to generate additional high-fidelity data.
+- **166 DFT-calibrated estimates** increase coverage but use calibrated physics models, not raw CP2K output. True model improvement requires HPC cluster runs to generate additional high-fidelity data.
 - **Chemical space coverage:** The 730-structure library covers a specific region of chemical space (DPA-class chelating heads with alkyl tails). The model should not be extrapolated to chemically dissimilar extractant families.
 
 ### v7 to v8 Fix
@@ -123,7 +123,7 @@ A pilot-plant trial (estimated cost: $500K-$2M, 6-12 months) would be required t
 
 The Janus Ligand selectivity data presented in this repository focuses primarily on the **Nd/Fe pair** (the dominant separation challenge from NdFeB scrap feedstock). Inter-lanthanide separations (Nd/Pr, Dy/Tb, Eu/Gd) are inherently harder due to the smaller ionic radius differences between adjacent lanthanides.
 
-The 200+ DFT dataset covers all 15 lanthanides + Fe, but the Kremser analysis and CapEx projections are calibrated for Nd/Fe. Lower separation factors should be expected for adjacent-lanthanide pairs.
+The 166 DFT-calibrated estimate dataset covers all 15 lanthanides + Fe, but the Kremser analysis and CapEx projections are calibrated for Nd/Fe. Lower separation factors should be expected for adjacent-lanthanide pairs.
 
 ---
 

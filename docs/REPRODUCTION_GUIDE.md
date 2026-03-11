@@ -83,7 +83,7 @@ Reduction = (1 - 59.5/204.4) x 100 = 70.9%
 
 **What it verifies:** That the Ridge regression model achieves R-squared exceeding 0.96 on held-out test data.
 
-**How this was measured:** The v8 model was trained on 58 verified + 200+ expanded DFT data points using ligand-out GroupKFold cross-validation. The R-squared of 0.966 is the average across folds on held-out data, not the training set score.
+**How this was measured:** The v8 model was trained on 58 verified + 166 DFT-calibrated estimate data points using ligand-out GroupKFold cross-validation. The R-squared of 0.966 is the average across folds on held-out data, not the training set score.
 
 ### Check 5: DFT Convergence
 

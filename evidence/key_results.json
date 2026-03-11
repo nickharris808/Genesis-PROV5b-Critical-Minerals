@@ -20,7 +20,7 @@
     "verified_calculations": 58,
     "verified_convergence": "58/58 (100%)",
     "verified_method": "CP2K PBE/DZVP-MOLOPT-PBE-GTH with D3 dispersion",
-    "expanded_calculations": "200+",
+    "expanded_calculations": 166,
     "expanded_method": "B3LYP/6-31G* with D3BJ, CPCM solvation",
     "metals_covered": 16,
     "metals_list": ["La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Fe"],

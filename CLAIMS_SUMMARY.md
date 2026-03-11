@@ -18,7 +18,7 @@ This summary covers the **REE-relevant subset** of the 95 claims: those directly
 ## Family 1: Janus Ligands for Rare Earth Extraction (Claims 1-15)
 
 **Type:** Composition of Matter
-**Strength:** STRONG (730 structures + 58 verified DFT + 200 expanded DFT)
+**Strength:** STRONG (730 structures + 58 verified DFT + 166 DFT-calibrated estimates)
 
 Claims 1-15 cover the Janus Ligand molecular architecture for selective rare earth element extraction from mixed feedstocks.
 
@@ -61,7 +61,7 @@ Claims 29-38 cover ion-selective membrane compositions for direct lithium extrac
 ## Family 4: Computational Discovery Engine (Claims 39-52)
 
 **Type:** Method
-**Strength:** STRONG (ML v8 + 200+ DFT + molecular fingerprints + ligand-out CV)
+**Strength:** STRONG (ML v8 + 166 DFT-calibrated estimates + molecular fingerprints + ligand-out CV)
 
 Claims 39-52 cover the computational methodology for discovering selective molecular architectures.
 
@@ -115,7 +115,7 @@ The following claim families are part of the full PROV 5 portfolio but are not R
 
 | Claim Family | Evidence Type | Dataset Size | Verification |
 |-------------|--------------|-------------|-------------|
-| Janus Ligands (1-15) | DFT binding energies | 58 verified + 200 expanded | 58/58 forensic match |
+| Janus Ligands (1-15) | DFT binding energies | 58 verified + 166 calibrated estimates | 58/58 forensic match |
 | Janus Ligands (1-15) | Molecular structures | 730 + 120 v2 | 730/730 valid |
 | Ion-Selective Membranes (29-38) | PMF calculations | 5 ions x 8 pore diameters | 10 ns/window, <10% uncertainty |
 | Computational Discovery (39-52) | ML surrogate | Ridge R-squared = 0.966 | Ligand-out CV validated |
