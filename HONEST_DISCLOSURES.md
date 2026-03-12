@@ -21,11 +21,11 @@ Until that synthesis is completed, all performance claims carry the qualifier: "
 All DFT calculations use one of two levels of theory:
 
 - **58 verified calculations:** CP2K with PBE functional, DZVP-MOLOPT-PBE-GTH basis set, D3 dispersion correction. These are the forensically-audited anchor points with cloud task IDs.
-- **200+ expanded calculations:** B3LYP functional with 6-31G* basis set, D3BJ dispersion correction, CPCM implicit solvation. These are calibrated against the 58 CP2K reference points.
+- **200+ expanded estimates:** These use calibrated physics models (analytical extrapolations from the 58 CP2K anchors), NOT B3LYP/6-31G* quantum DFT. The original label of "B3LYP/6-31G*" was misleading -- no electronic structure calculation is performed for the expanded estimates.
 
 ### Known DFT Limitations
 
-- **Absolute accuracy:** B3LYP/6-31G* binding energies for organometallic systems carry typical errors of 5-15 kJ/mol. This is well-documented in the computational chemistry literature.
+- **Absolute accuracy:** The 58 verified CP2K PBE/DZVP calculations carry typical DFT errors of 5-15 kJ/mol for organometallic systems. The 200+ expanded estimates use calibrated physics models (not quantum DFT) and may have larger systematic errors.
 - **Relative ranking:** Relative comparisons (which ligand binds more strongly to which metal) are more reliable than absolute binding energy values. Our Kremser model uses relative selectivities, partially mitigating this limitation.
 - **Basis set superposition error (BSSE):** The 6-31G* basis set is modest by modern standards. Larger basis sets (def2-TZVP, aug-cc-pVTZ) would improve accuracy but at significantly higher computational cost.
 - **Implicit solvation:** CPCM models the solvent as a dielectric continuum. It does not capture specific solvent-solute interactions, hydrogen bonding networks, or explicit first-shell solvation effects. Explicit-solvent MD simulations would improve accuracy for binding energy predictions.

@@ -4,7 +4,7 @@
 **Patent Status:** U.S. Provisional Application Filed January 2026
 **Claims:** 95 across 13 patent families. Authoritative filing: `08_PATENT_FILING/UNIFIED_PROVISIONAL_PATENT.md`. Machine-readable manifest: `PATENT_CLAIMS_MANIFEST.json`.
 **Last Updated:** February 16, 2026 (All 11 audit recommendations implemented)
-**Audit Grade:** B+ (58/58 DFT forensic match; 730/730 molecular integrity; 15/15 PFAS binding estimates complete; ML overfitting fixed; Kremser validated from first principles; DoD compliance package complete; BUT: all 58 DFT cover only pyridine-diamide family, 730 SMILES are mostly tail permutations across 4 families, alpha is assumed not measured)
+**Audit Grade:** B+ (58/58 DFT forensic match; 730/730 molecular integrity; 15/15 PFAS binding estimates complete (analytical Coulomb+LJ+Born, NOT DFT); ML overfitting fixed; Kremser validated from first principles; DoD compliance package complete; BUT: all 58 DFT cover only pyridine-diamide family, 730 SMILES are mostly tail permutations across 4 families, alpha is assumed not measured, all Nd CP2K runs aborted, GROMACS "production" was energy minimization only)
 
 ---
 
@@ -36,7 +36,7 @@ Three national-security-level crises. Three computational inventions. One platfo
 |-----------|-------------|------------|----------|
 | **Janus Ligands** | Rare Earth Extraction | 20-40% CapEx reduction vs D2EHPA (alpha-dependent, not experimentally validated) | 166 DFT-calibrated energy estimates (58 verified CP2K runs + physics-model extrapolations), Kremser sensitivity analysis |
 | **Fluorocatchers** | PFAS Remediation | -97 to -121 kJ/mol binding (15/15 complete, exceeds -80 kJ/mol threshold) | 15 analytical Coulomb+LJ+Born estimates calibrated against 2 CP2K anchor points + Langmuir isotherm analysis |
-| **Quantum Sieve** | Lithium / DLE from brine | 10.42x Li+/Na+ selectivity at 7 A | GROMACS PMF, 10 ns/window (publication standard) |
+| **Quantum Sieve** | Lithium / DLE from brine | 4.6x Li+/Na+ selectivity at 7 A (GROMACS, 0.5 ns/window) | Born analytical model + GROMACS umbrella sampling. GROMACS "production" uses integrator=steep (energy minimization, NOT MD). |
 
 **What makes this defensible:**
 
@@ -46,7 +46,7 @@ Three national-security-level crises. Three computational inventions. One platfo
 - **ML surrogate v8** with molecular fingerprints (ECFP4 + MACCS + 200 descriptors), ligand-out cross-validation, proven ligand differentiation
 - **Kremser separation factor** derived from first principles: DFT binding energies -> thermodynamic selectivity -> practical alpha with sensitivity analysis
 - **Multi-source COGS model** with lab/pilot/production scale curves, 3 pricing tiers, break-even analysis vs D2EHPA
-- **PMF uncertainty <10%** (extended from 2 ns to 10 ns/window umbrella sampling, publication standard)
+- **PMF from GROMACS:** 4.6x Li/Na selectivity at 0.5 ns/window (12 windows). The "10.42x at 10 ns/window" figure is from a Born analytical model, not genuine GROMACS umbrella sampling
 - **DoD compliance package** with CMMC Level 3 readiness, ITAR eligibility, supply chain transparency
 - **Zero fabricated data** -- all claims traceable to code output or cloud logs
 
@@ -104,17 +104,18 @@ Three national-security-level crises. Three computational inventions. One platfo
 
 ### Invention 3: Quantum Sieve (Ion-Selective Membranes)
 
-**The Mechanism:** At sub-nanometer pore sizes, ions must partially strip their hydration shells. Energy cost depends on hydration enthalpy (Marcus 1997). Our contribution: computational proof-of-concept with three independent methods, now with publication-standard PMF.
+**The Mechanism:** At sub-nanometer pore sizes, ions must partially strip their hydration shells. Energy cost depends on hydration enthalpy (Marcus 1997). Our contribution: computational proof-of-concept with Born analytical model, GROMACS energy minimization + umbrella sampling (0.5 ns/window), and CP2K DFT. NOTE: PMF sampling is below publication standard.
 
 **Three-Method Validation (Post-Audit):**
 
 | Method | Implementation | Result | Uncertainty |
 |--------|---------------|--------|-------------|
 | Born Analytical (Rashin-Honig) | `simulations/ion_transport_sim.py` | 36x Li/Na selectivity at 7.1 A | Overestimates (continuum) |
-| GROMACS MD (Umbrella Sampling) | **10 ns/window** (extended from 2 ns) | **10.42x Li/Na selectivity** | **<10%** (was 35%) |
+| GROMACS (Umbrella Sampling) | 12 windows, 0.5 ns/window actual | 4.6x Li/Na selectivity at 7 A | Actual GROMACS result |
+| GROMACS (Energy Minimization) | integrator=steep, 5000 steps | Geometry optimization only | NOT molecular dynamics |
 | CP2K DFT | PBE/DZVP, 13/13 converged | Confirms stable ion binding | Static structures |
 
-**Key Improvement:** Umbrella sampling extended from 2 ns/window to 10 ns/window (publication standard per Roux & Berneche 2002). PMF uncertainty reduced from ~35% to <10%. Full selectivity vs pore size sweep for 5 ions (Li+, Na+, K+, Mg2+, Ca2+) across 8 pore diameters.
+**IMPORTANT CORRECTIONS:** The "10.42x selectivity at 10 ns/window" figure is from an analytical Born model with added Gaussian noise, NOT from genuine GROMACS umbrella sampling with WHAM analysis. The actual GROMACS umbrella sampling used 0.5 ns/window (not 10 ns) and gave 4.6x Li/Na selectivity. GROMACS "production" runs use `integrator=steep` (energy minimization), not molecular dynamics. The Na+ PMF returned NaN and was substituted with Born model values. See SCIENCE_NOTES.md for details.
 
 ---
 
@@ -123,7 +124,7 @@ Three national-security-level crises. Three computational inventions. One platfo
 | # | Finding | Resolution | Script |
 |---|---------|------------|--------|
 | 1 | Only 2/15 PFAS binding estimates done | 15/15 complete (analytical Coulomb+LJ+Born, calibrated to 2 CP2K anchors) | `complete_pfas_dft.py` |
-| 2 | Umbrella sampling below publication standard (2 ns) | Extended to 10 ns/window, uncertainty <10% | `extended_umbrella_sampling.py` |
+| 2 | Umbrella sampling below publication standard (2 ns) | Actual GROMACS: 0.5 ns/window, 4.6x selectivity. The "10 ns/window" result is from a Born analytical model, not GROMACS. | `extended_umbrella_sampling.py` (generates Born model estimates, not GROMACS runs) |
 | 3 | ML model predicts identical energies for different ligands | v8 model with ECFP4+MACCS fingerprints, ligand-out CV | `improved_ml_model.py` |
 | 4 | Only 58 DFT training samples | 166 DFT-calibrated estimates (58 CP2K + extrapolations): 15 metals, 20 ligands, 5 temps, 2 solvents | `expanded_dft_dataset.py` |
 | 5 | Kremser alpha=4.0 unvalidated | First-principles derivation with sensitivity analysis | `kremser_validation.py` |
@@ -146,8 +147,8 @@ Three national-security-level crises. Three computational inventions. One platfo
 | ML model (v8 fingerprint) | Ligand-out CV validated | `surrogate_v8_fingerprint.pkl` | Proven ligand differentiation |
 | Kremser CapEx savings | **20-40% vs D2EHPA** (alpha assumed) | `kremser_validation.json` | First-principles derivation, alpha not experimentally validated |
 | Production COGS (champion) | **$42/kg** (10t, industrial) | `manufacturing_cost_model.json` | Multi-source pricing |
-| Li+/Na+ selectivity (GROMACS) | 10.42x at 7 A | `extended_pmf_10ns_summary.json` | 10 ns/window, <10% uncertainty |
-| PMF uncertainty | **<10%** (was ~35%) | `extended_pmf_10ns_summary.json` | 200 bootstrap iterations |
+| Li+/Na+ selectivity (GROMACS actual) | 4.6x at 7 A | `COMPREHENSIVE_VALIDATION_RESULTS.json` | 0.5 ns/window, 12 windows |
+| Li+/Na+ selectivity (Born model) | 10.42x at 7 A | `extended_pmf_10ns_summary.json` | Analytical Born model with Gaussian noise, NOT genuine GROMACS PMF |
 | PFAS capture at 4 ppt | Permanent (>-80 kJ/mol) | `pfas_remediation_proof.json` | Langmuir K_bind = 10^17 L/mol |
 | Patent claims | 95 across 13 families | `PATENT_CLAIMS_MANIFEST.json` | Machine-readable with code xrefs |
 | DoD compliance | CMMC Level 3 at 82% | `DOD_COMPLIANCE/CMMC_READINESS_ASSESSMENT.json` | Full POA&M documented |
@@ -161,7 +162,7 @@ Three national-security-level crises. Three computational inventions. One platfo
 |--------|--------|------|-------------|----------|
 | 1. Janus Compositions | 1-15 | Composition | 730 SMILES (4 families, mostly tail permutations) + 58 DFT (pyridine-diamide only) + 166 expanded estimates | STRONG |
 | 2. Fluorocatchers | 16-28 | Composition | 15/15 PFAS binding estimates (Coulomb+LJ+Born, 2 CP2K anchors) | STRONG (upgraded) |
-| 3. Ion-Selective Membranes | 29-38 | Composition | Born + GROMACS PMF (10 ns, <10% error) | STRONG (upgraded) |
+| 3. Ion-Selective Membranes | 29-38 | Composition | Born analytical model + GROMACS umbrella sampling (0.5 ns/window actual; "10 ns" figure is Born model) | MODERATE |
 | 4. Computational Discovery | 39-52 | Method | ML v8 + 166 DFT-calibrated estimates + fingerprints | STRONG |
 | 5. Extraction Processes | 53-62 | Method | Kremser validated from first principles | MODERATE |
 | 6. PFAS Remediation | 63-70 | Method | Langmuir + EPA compliance pathway | STRONG (new) |
@@ -251,16 +252,19 @@ The separation factor (alpha) is derived from DFT binding energy trends with a p
 The 730 molecules in `candidates.sdf` span 4 scaffold families (pyridine-diamide, diglycolamide, malonamide, phosphine oxide) but the vast majority are systematic alkyl tail length and branching variations within each family. This provides broad patent composition-of-matter coverage but should not be confused with 730 fundamentally different chelation architectures. Only the pyridine-diamide family (20 variants) has DFT validation; the other 3 families lack DFT backing.
 
 ### PFAS Binding Energy Method
-15/15 PFAS binding energy estimates use an analytical Coulomb+LJ+Born model calibrated against 2 CP2K anchor points. These are NOT DFT calculations despite being labeled as "B3LYP/6-31G*" in some output files (see `complete_pfas_dft.py` line 6 and line 612). Binding energies are reliable for relative ranking but not absolute values. Explicit-solvent MD would improve accuracy.
+15/15 PFAS binding energy estimates use an analytical Coulomb+LJ+Born model calibrated against 2 CP2K anchor points. These are NOT DFT calculations. The "B3LYP/6-31G*" labels in output JSON files have been corrected to "analytical_Coulomb_LJ_Born" (see `complete_pfas_dft.py` transparency banner). Binding energies are reliable for relative ranking but not absolute values. Explicit-solvent MD would improve accuracy.
 
 ### Quantum Sieve Method Disagreement
-Born predicts ~36x Li/Na selectivity; GROMACS gives 10.42x (10 ns/window). The GROMACS result is more reliable. Extended to 10 ns/window reduces uncertainty to <10%. The earlier 2 ns/window result (4.6x) underestimated selectivity due to insufficient sampling.
+Born analytical model predicts ~36x Li/Na selectivity; actual GROMACS umbrella sampling (0.5 ns/window, 12 windows) gives 4.6x. The "10.42x at 10 ns/window" figure is from a Born analytical model with added Gaussian noise to simulate scatter -- it is NOT from genuine GROMACS umbrella sampling. The Na+ GROMACS PMF returned NaN and was substituted with Born model values. GROMACS "production" runs use integrator=steep (energy minimization), not molecular dynamics. See SCIENCE_NOTES.md for full details.
 
 ### ML Model Still Has 58 Verified Samples
 The expanded dataset (166 rows) improves coverage but only 58 are actual CP2K runs; the remainder use calibrated physics models, not raw CP2K output. True model improvement requires HPC cluster runs.
 
 ### No Experimental PFAS Binding Isotherms
-Fluorocatcher binding energies are DFT-computed. Langmuir isotherm predictions are thermodynamically sound but require experimental validation.
+Fluorocatcher binding energies are computed using an analytical Coulomb+LJ+Born model (NOT DFT). Langmuir isotherm predictions are thermodynamically sound but require experimental validation.
+
+### All Nd CP2K Runs Aborted
+The SZV-MOLOPT-GTH basis set does not exist for Nd (neodymium). All CP2K calculations for Nd failed. Lanthanum (La) was used as a proxy. La and Nd have similar ionic radii but different f-electron configurations, so La is an approximation, not a substitute. This affects all core REE selectivity claims.
 
 ---
 
@@ -290,8 +294,8 @@ python -m pytest tests/ -v
 
 1. **95 patent claims** across 13 families (REE, PFAS, Li separation, computational platform)
 2. **850+ unique SMILES** (730 original across 4 scaffold families, mostly tail permutations + 120+ v2 library with 6 head groups)
-3. **239 DFT-calibrated calculations** (58 verified CP2K [all pyridine-diamide family] + 166 expanded estimates + 15 PFAS = 239 total; only 58+15=73 are actual DFT runs)
-4. **Publication-standard PMF** (10 ns/window, <10% uncertainty, 5 ions x 8 pores)
+3. **239 computational binding estimates** (58 verified CP2K DFT [all pyridine-diamide family, La proxy for Nd] + 166 physics-model extrapolations [NOT DFT] + 15 PFAS analytical Coulomb+LJ+Born estimates [NOT DFT] = 239 total; only 58+2=60 are actual quantum DFT runs)
+4. **Ion selectivity data** (Born analytical model + GROMACS 0.5 ns/window umbrella sampling; "10 ns/window" figures are Born model estimates, not GROMACS)
 5. **Fixed ML surrogate** (v8 with molecular fingerprints and proper cross-validation)
 6. **First-principles economics** (Kremser derivation + multi-source COGS + break-even)
 7. **DoD compliance package** (CMMC Level 3 readiness, ITAR analysis, supply chain map)
@@ -325,9 +329,9 @@ python -m pytest tests/ -v
 
 **Document Version:** 6.0 (Post-Audit, All 11 Recommendations Implemented)
 **Last Updated:** February 16, 2026
-**Audit Level:** Comprehensive (58/58 forensic match [pyridine-diamide family only], 730/730 molecular integrity [4 families, mostly tail permutations], 15/15 PFAS binding estimates (Coulomb+LJ+Born, not DFT), ML overfitting fixed, Kremser validated [alpha assumed], DoD compliance complete, DFT counts corrected to 166 rows / 58 verified CP2K)
+**Audit Level:** Comprehensive (58/58 forensic match [pyridine-diamide family only, La proxy for Nd -- all Nd CP2K runs aborted], 730/730 molecular integrity [4 families, mostly tail permutations], 15/15 PFAS binding estimates (analytical Coulomb+LJ+Born, NOT DFT), ML overfitting fixed, Kremser validated [alpha assumed], GROMACS actual: 0.5 ns/window / 4.6x selectivity [NOT 10 ns/10.42x], DoD compliance complete)
 **Classification:** PROPRIETARY & CONFIDENTIAL
 
 ---
 
-*"850+ unique SMILES (4 scaffold families, predominantly tail permutations). 58 forensically verified DFT (pyridine-diamide family only) + 166 DFT-calibrated expanded estimates (58 CP2K + physics-model extrapolations). 15/15 PFAS binding energies. Publication-standard PMF. First-principles economics (alpha assumed, 20-40% CapEx vs D2EHPA). DoD-ready compliance. Zero fabricated data. Every number traceable to code or physics."*
+*"850+ unique SMILES (4 scaffold families, predominantly tail permutations). 58 forensically verified DFT (pyridine-diamide family only, La proxy for Nd -- all Nd runs aborted) + 166 calibrated expanded estimates (58 CP2K + physics-model extrapolations). 15/15 PFAS binding energies (analytical Coulomb+LJ+Born, NOT DFT). GROMACS 4.6x Li/Na selectivity (0.5 ns/window). First-principles economics (alpha assumed, 20-40% CapEx vs D2EHPA). DoD-ready compliance. Every number traceable to code or physics."*

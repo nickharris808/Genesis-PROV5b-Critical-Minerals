@@ -39,7 +39,7 @@
     "dft_verified_note": "58/58 forensic match with cloud task IDs",
     "dft_expanded": 166,
     "dft_expanded_note": "166 DFT-calibrated estimates across 15 metals, 20 ligands, 5 temperatures, 2 solvents (physics-model extrapolations from 58 CP2K anchors)",
-    "dft_method": "B3LYP/6-31G*",
+    "dft_method": "CP2K PBE/DZVP (58 verified) + analytical Coulomb+LJ+Born (expanded estimates)",
     "dft_reference_method": "CP2K PBE/DZVP-MOLOPT-PBE-GTH/D3",
     "dft_dispersion": "D3 (Grimme)",
     "dft_solvation": "CPCM implicit"

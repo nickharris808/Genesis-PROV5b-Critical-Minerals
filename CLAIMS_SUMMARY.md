@@ -18,7 +18,7 @@ This summary covers the **REE-relevant subset** of the 95 claims: those directly
 ## Family 1: Janus Ligands for Rare Earth Extraction (Claims 1-15)
 
 **Type:** Composition of Matter
-**Strength:** STRONG (730 structures + 58 verified DFT + 166 DFT-calibrated estimates)
+**Strength:** STRONG (730 structures + 58 verified CP2K DFT + 166 calibrated physics-model estimates [NOT quantum DFT])
 
 Claims 1-15 cover the Janus Ligand molecular architecture for selective rare earth element extraction from mixed feedstocks.
 
@@ -40,7 +40,7 @@ Claims 1-15 cover the Janus Ligand molecular architecture for selective rare ear
 ## Family 3: Ion-Selective Membranes for DLE (Claims 29-38)
 
 **Type:** Composition of Matter
-**Strength:** STRONG (Born analytical + GROMACS PMF at 10 ns/window, <10% uncertainty)
+**Strength:** MODERATE (Born analytical model + GROMACS umbrella sampling at 0.5 ns/window actual; "10 ns/window" figure is from Born model, not GROMACS)
 
 Claims 29-38 cover ion-selective membrane compositions for direct lithium extraction from brine.
 
@@ -52,7 +52,7 @@ Claims 29-38 cover ion-selective membrane compositions for direct lithium extrac
 | 35-36 | Dependent: selectivity | Li+/Na+ selectivity at specified minimum ratio |
 | 37-38 | Dependent: manufacturing | Fabrication methods for controlled pore size distribution |
 
-**Blocking Claim (Claim 31):** Pore diameter 0.65-0.75 nm. Computational PMF analysis (GROMACS, 10 ns/window, 5 ions x 8 pore diameters) demonstrates this is the only pore size range achieving meaningful Li+/Na+ selectivity through hydration shell stripping.
+**Blocking Claim (Claim 31):** Pore diameter 0.65-0.75 nm. Computational analysis (Born analytical model + GROMACS umbrella sampling at 0.5 ns/window) demonstrates this is the only pore size range achieving meaningful Li+/Na+ selectivity through hydration shell stripping. NOTE: Multi-pore sweep is from Born model only; GROMACS data covers 7A pore only.
 
 **Blocking Claim (Claim 33):** Pore size exclusivity. No design-around is physically possible -- the hydration shell stripping mechanism is governed by fundamental ionic radii and hydration enthalpies (Marcus 1997).
 
@@ -117,7 +117,7 @@ The following claim families are part of the full PROV 5 portfolio but are not R
 |-------------|--------------|-------------|-------------|
 | Janus Ligands (1-15) | DFT binding energies | 58 verified + 166 calibrated estimates | 58/58 forensic match |
 | Janus Ligands (1-15) | Molecular structures | 730 + 120 v2 | 730/730 valid |
-| Ion-Selective Membranes (29-38) | PMF calculations | 5 ions x 8 pore diameters | 10 ns/window, <10% uncertainty |
+| Ion-Selective Membranes (29-38) | Born analytical + GROMACS umbrella | GROMACS: 3 ions x 1 pore (7A), 0.5 ns/window | Born model provides multi-pore sweep; GROMACS gives 4.6x Li/Na |
 
 > **Disclosure (Feb 2026 audit):**
 > - **Nd CP2K runs all aborted.** Neodymium simulations in CP2K failed to complete; Lanthanum (La) was used as a proxy for all Nd claims. La and Nd have similar ionic radii but different f-electron configurations, so La is an approximation, not a substitute.
