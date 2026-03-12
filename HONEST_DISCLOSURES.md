@@ -6,7 +6,7 @@
 
 ## 1. All Results Are Computational
 
-**No Janus Ligand has been synthesized.** The 730 molecular structures in our library exist as computational designs (SMILES strings, 3D coordinates from geometry optimization) -- not as physical compounds in a vial. No extraction experiment has been performed. No pilot plant has been built. No product purity has been measured.
+**No Janus Ligand has been synthesized.** The 405 molecular structures in our expanded library exist as computational designs (SMILES strings, 3D coordinates from geometry optimization) -- not as physical compounds in a vial. No extraction experiment has been performed. No pilot plant has been built. No product purity has been measured.
 
 The single most impactful next step is wet-lab synthesis of the top 3 candidate structures and testing of extraction performance in a laboratory-scale mixer-settler or centrifugal contactor. Estimated cost: approximately $50,000 over 4 weeks at a university chemistry partnership.
 
@@ -21,11 +21,21 @@ Until that synthesis is completed, all performance claims carry the qualifier: "
 All DFT calculations use one of two levels of theory:
 
 - **58 verified calculations:** CP2K with PBE functional, DZVP-MOLOPT-PBE-GTH basis set, D3 dispersion correction. These are the forensically-audited anchor points with cloud task IDs.
-- **200+ expanded estimates:** These use calibrated physics models (analytical extrapolations from the 58 CP2K anchors), NOT B3LYP/6-31G* quantum DFT. The original label of "B3LYP/6-31G*" was misleading -- no electronic structure calculation is performed for the expanded estimates.
+- **166 expanded estimates:** These are SYNTHETIC FORMULA-GENERATED values using a calibrated analytical Coulomb+LJ+Born model, NOT quantum DFT calculations. No electronic structure calculation is performed for these entries. The original label of "B3LYP/6-31G*" was misleading and has been corrected. These should be understood as parametric extrapolations from the 58 CP2K anchors, not independent quantum mechanical results.
+
+### La Used as Nd Proxy -- Systematic Error Unknown
+
+**All 58 verified CP2K calculations use Lanthanum (La), not Neodymium (Nd).** The Nd CP2K runs all aborted and were never completed. La was chosen as a proxy because La and Nd have similar ionic radii (La3+: 1.032 A, Nd3+: 0.983 A).
+
+However, La and Nd have fundamentally different electronic structures:
+- La has no f-electrons (4f0); Nd has three (4f3)
+- f-electron contributions to bonding are not captured by the La proxy
+- The systematic error introduced by this substitution is **unknown** and has not been quantified
+- Claims about "Nd selectivity" are actually "La selectivity" measurements projected onto Nd
 
 ### Known DFT Limitations
 
-- **Absolute accuracy:** The 58 verified CP2K PBE/DZVP calculations carry typical DFT errors of 5-15 kJ/mol for organometallic systems. The 200+ expanded estimates use calibrated physics models (not quantum DFT) and may have larger systematic errors.
+- **Absolute accuracy:** The 58 verified CP2K PBE/DZVP calculations carry typical DFT errors of 5-15 kJ/mol for organometallic systems. The 166 expanded estimates use calibrated physics models (not quantum DFT) and may have larger systematic errors.
 - **Relative ranking:** Relative comparisons (which ligand binds more strongly to which metal) are more reliable than absolute binding energy values. Our Kremser model uses relative selectivities, partially mitigating this limitation.
 - **Basis set superposition error (BSSE):** The 6-31G* basis set is modest by modern standards. Larger basis sets (def2-TZVP, aug-cc-pVTZ) would improve accuracy but at significantly higher computational cost.
 - **Implicit solvation:** CPCM models the solvent as a dielectric continuum. It does not capture specific solvent-solute interactions, hydrogen bonding networks, or explicit first-shell solvation effects. Explicit-solvent MD simulations would improve accuracy for binding energy predictions.
@@ -45,7 +55,7 @@ The Kremser equation (N = ln(x_feed/x_raff) / ln(alpha)) is a rigorous thermodyn
 
 The separation factor (alpha) is derived from DFT binding energies through a multi-step chain:
 
-1. DFT binding energies for Janus Ligand-Nd and Janus Ligand-Fe complexes
+1. DFT binding energies for Janus Ligand-La (not Nd) and Janus Ligand-Fe complexes
 2. Isodesmic reaction analysis relative to TBP reference
 3. Boltzmann conversion to ideal separation factor (alpha_ideal = 56.5)
 4. Practical correction factor (gamma = 0.3-0.5 from Rydberg 2004)
@@ -75,15 +85,21 @@ The 70.8% figure requires alpha >> 7.5, which corresponds to the raw thermodynam
 
 ---
 
-## 4. ML Surrogates Trained on Simulated Data
+## 4. ML Surrogate Has No Predictive Power for Unseen Scaffolds
 
 The machine learning surrogate model (Ridge regression, R-squared = 0.966) is trained entirely on DFT-computed binding energies. It has never seen an experimental data point. Its accuracy is bounded by the accuracy of the underlying DFT calculations.
+
+### Critical Limitation: One-Hot Encoding = Lookup Table
+
+The ML model uses a combination of one-hot encoding and molecular fingerprints (ECFP4, MACCS). The one-hot component means the model is partially a lookup table -- it memorizes ligand-metal associations rather than learning transferable chemical patterns. For any ligand not in the training set, the one-hot features are all zero, and the model relies entirely on molecular fingerprints, which have not been validated for out-of-distribution prediction.
+
+**The model has no demonstrated predictive power for unseen scaffold families.** The R-squared = 0.966 reflects interpolation within the training distribution, not generalization.
 
 ### Training Data Limitations
 
 - **58 verified samples** form the anchor dataset. This is a small training set by ML standards.
-- **200+ expanded calculations** increase coverage but use calibrated physics models, not raw CP2K output. True model improvement requires HPC cluster runs to generate additional high-fidelity data.
-- **Chemical space coverage:** The 730-structure library covers a specific region of chemical space (DPA-class chelating heads with alkyl tails). The model should not be extrapolated to chemically dissimilar extractant families.
+- **166 expanded estimates** increase coverage but are SYNTHETIC FORMULA-GENERATED values (analytical Coulomb+LJ+Born), not raw CP2K output. Training an ML model on synthetic data generated by a simple formula, then claiming ML "predictions," is circular.
+- **Chemical space coverage:** The 405-structure expanded library covers a specific region of chemical space (DPA-class chelating heads with alkyl tails). The model should not be extrapolated to chemically dissimilar extractant families.
 
 ### v7 to v8 Fix
 
@@ -91,9 +107,9 @@ The v7 ML model had a critical bug: it used one-hot ligand encoding, causing ide
 
 ---
 
-## 5. 730 Structures Are Computationally Designed, Not Synthesized
+## 5. 405 Structures Are Computationally Designed, Not Synthesized
 
-The 730-structure molecular library was generated by combinatorial assembly of validated building blocks (6 head groups, 10 tails, 4 linkers) followed by computational filtering for:
+The 405-structure expanded molecular library (`expanded_candidates.sdf`) was generated through combinatorial assembly of validated building blocks followed by computational filtering for:
 
 - Chemical validity (RDKit sanitization)
 - Synthetic accessibility score
@@ -104,7 +120,20 @@ These filters assess computational plausibility, not synthetic feasibility. A co
 
 ---
 
-## 6. No Pilot Plant Data
+## 6. GROMACS: Only Energy Minimization, Not Production MD
+
+The GROMACS simulation results in this repository consist of **10 ps of steepest-descent energy minimization only**. This is NOT production molecular dynamics. Specifically:
+
+- No equilibration (NVT or NPT) was performed
+- No production trajectory was generated
+- No statistically converged thermodynamic properties were obtained
+- No free energy calculations from GROMACS are available (PMF values attributed to GROMACS are from umbrella sampling at 0.5 ns/window for Li+ and K+ only; Na+ used the Born analytical model because GROMACS returned NaN)
+
+Claims based on "GROMACS molecular dynamics" should be understood as energy minimization geometry optimization, not time-evolved molecular simulation.
+
+---
+
+## 7. No Pilot Plant Data
 
 The Kremser economic model predicts capital expenditure based on stage count and unit costs. It does not account for:
 
@@ -119,26 +148,29 @@ A pilot-plant trial (estimated cost: $500K-$2M, 6-12 months) would be required t
 
 ---
 
-## 7. Inter-Lanthanide Separation
+## 8. Inter-Lanthanide Separation
 
-The Janus Ligand selectivity data presented in this repository focuses primarily on the **Nd/Fe pair** (the dominant separation challenge from NdFeB scrap feedstock). Inter-lanthanide separations (Nd/Pr, Dy/Tb, Eu/Gd) are inherently harder due to the smaller ionic radius differences between adjacent lanthanides.
+The Janus Ligand selectivity data presented in this repository focuses primarily on the **Nd/Fe pair** (actually La/Fe -- see Section 2), the dominant separation challenge from NdFeB scrap feedstock. Inter-lanthanide separations (Nd/Pr, Dy/Tb, Eu/Gd) are inherently harder due to the smaller ionic radius differences between adjacent lanthanides.
 
-The 200+ DFT dataset covers all 15 lanthanides + Fe, but the Kremser analysis and CapEx projections are calibrated for Nd/Fe. Lower separation factors should be expected for adjacent-lanthanide pairs.
+The 166 formula-generated dataset covers all 15 lanthanides + Fe, but these are analytical estimates, not CP2K results. The Kremser analysis and CapEx projections are calibrated for La/Fe (used as proxy for Nd/Fe). Lower separation factors should be expected for adjacent-lanthanide pairs.
 
 ---
 
-## 8. Summary of Confidence Levels
+## 9. Summary of Confidence Levels
 
 | Claim | Confidence | Basis | What Would Change It |
 |-------|-----------|-------|---------------------|
-| 730 valid molecular structures | HIGH | RDKit validation, 730/730 pass | Synthesis attempts |
-| 58/58 DFT converged | HIGH | Forensic audit with task IDs | Independent recomputation |
+| 405 valid expanded molecular structures | HIGH | RDKit validation, 405/405 pass | Synthesis attempts |
+| 58/58 DFT converged (La proxy) | HIGH | Forensic audit with task IDs | Independent recomputation with actual Nd |
+| 166 "expanded DFT" are formula-generated | FACT | Code inspection | Nothing (this is what the code does) |
 | Kremser equation correctness | HIGH | Textbook thermodynamics | Nothing (it is exact) |
-| Janus SF > 10,000 (thermodynamic) | MODERATE | DFT binding energy difference | Higher-level QM methods |
+| Janus SF > 10,000 (thermodynamic, La not Nd) | MODERATE | DFT binding energy difference (La proxy) | Higher-level QM with actual Nd |
 | Practical alpha = 3.3-7.5 | MODERATE | Kremser + correction factors | Experimental extraction tests |
 | CapEx reduction 20-40% | MODERATE | Kremser model | Pilot plant data |
 | CapEx reduction 70.8% | LOW | Assumes full DFT selectivity | Almost certainly optimistic |
-| ML R-squared = 0.966 | HIGH | Held-out test data | More training data |
+| ML R-squared = 0.966 | HIGH (within training set) | Held-out test data | Out-of-distribution testing |
+| ML predicts unseen scaffolds | LOW | No evidence | Novel scaffold DFT validation |
+| GROMACS production MD completed | FALSE | Only 10ps energy minimization exists | Actual production MD runs |
 | Commercial viability | LOW | Model-based projections | Market conditions, actual costs |
 
 ---
