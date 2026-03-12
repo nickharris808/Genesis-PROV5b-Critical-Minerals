@@ -118,6 +118,10 @@ The following claim families are part of the full PROV 5 portfolio but are not R
 | Janus Ligands (1-15) | DFT binding energies | 58 verified + 166 calibrated estimates | 58/58 forensic match |
 | Janus Ligands (1-15) | Molecular structures | 730 + 120 v2 | 730/730 valid |
 | Ion-Selective Membranes (29-38) | PMF calculations | 5 ions x 8 pore diameters | 10 ns/window, <10% uncertainty |
+
+> **Disclosure (Feb 2026 audit):**
+> - **Nd CP2K runs all aborted.** Neodymium simulations in CP2K failed to complete; Lanthanum (La) was used as a proxy for all Nd claims. La and Nd have similar ionic radii but different f-electron configurations, so La is an approximation, not a substitute.
+> - **PMF methodology clarification.** The PMF values for Li+, K+ barriers (7.1, 7.7 kJ/mol) are from GROMACS umbrella sampling. The Na+ barrier (7.4 kJ/mol) is from a calibrated Born analytical model (not GROMACS umbrella sampling) because the GROMACS PMF for Na+ returned NaN. The Born model is a continuum dielectric approximation, not a molecular-level free energy calculation.
 | Computational Discovery (39-52) | ML surrogate | Ridge R-squared = 0.966 | Ligand-out CV validated |
 | Computational Discovery (39-52) | Kremser model | 18-point sensitivity curve | First-principles derivation |
 
