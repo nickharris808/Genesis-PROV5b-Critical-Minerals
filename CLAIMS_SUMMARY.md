@@ -19,7 +19,7 @@ This summary covers the **REE-relevant subset** of the 95 claims: those directly
 
 The following assets are independently verified and form the real foundation of the REE claims:
 
-1. **58 verified CP2K DFT calculations** with cloud provenance (Inductiva task IDs). Each calculation has a unique task ID traceable to cloud logs. Method: PBE/DZVP-MOLOPT-PBE-GTH with D3 dispersion.
+1. **58 verified CP2K DFT calculations** with cloud provenance (Inductiva task IDs). Each calculation has a unique task ID traceable to cloud logs. Method: PBE/DZVP-MOLOPT-SR-GTH (no dispersion correction applied).
 2. **Kremser separation framework** with 18-point sensitivity analysis. The Kremser equation is rigorous textbook thermodynamics. The sensitivity sweep produces a defensible CapEx reduction range of 20-40%.
 3. **405 RDKit-generated scaffolds** in `expanded_candidates.sdf`, all with valid 3D coordinates and chemical sanitization.
 4. **Analytical Born model** for pore selectivity screening -- correct continuum electrostatics producing physically meaningful Li+/Na+ selectivity predictions.

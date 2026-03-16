@@ -20,7 +20,7 @@ Until that synthesis is completed, all performance claims carry the qualifier: "
 
 All DFT calculations use one of two levels of theory:
 
-- **58 verified calculations:** CP2K with PBE functional, DZVP-MOLOPT-PBE-GTH basis set, D3 dispersion correction. These are the forensically-audited anchor points with cloud task IDs.
+- **58 verified calculations:** CP2K with PBE functional, DZVP-MOLOPT-SR-GTH basis set. No dispersion correction was applied to the 58 verified runs (D3 exists in template_publication.inp but was never used). These are the forensically-audited anchor points with cloud task IDs.
 - **166 expanded estimates:** These are SYNTHETIC FORMULA-GENERATED values using a calibrated analytical Coulomb+LJ+Born model, NOT quantum DFT calculations. No electronic structure calculation is performed for these entries. The original label of "B3LYP/6-31G*" was misleading and has been corrected. These should be understood as parametric extrapolations from the 58 CP2K anchors, not independent quantum mechanical results.
 
 ### La Used as Nd Proxy -- Systematic Error Unknown

@@ -62,7 +62,7 @@ Three national-security-level crises. Three computational inventions. One platfo
 
 **Validated Results (Post-Audit):**
 - **166 DFT-calibrated energy estimates** (58 verified CP2K runs + physics-model extrapolations) across 15 metals, 20 ligands, 5 temperatures, 2 solvents (`expanded_dft_dataset.csv`)
-- 58 verified DFT calculations with forensic provenance (CP2K, PBE/DZVP-MOLOPT-PBE-GTH, D3) -- all 20 ligand variants are pyridine-diamide family only; other 3 scaffold families lack DFT backing
+- 58 verified DFT calculations with forensic provenance (CP2K, PBE/DZVP-MOLOPT-SR-GTH, no D3 dispersion) -- all 20 ligand variants are pyridine-diamide family only; other 3 scaffold families lack DFT backing
 - 120+ novel Janus ligand candidates in library v2 (6 head groups, 10 tails, 4 linkers)
 - Kremser separation factor **derived from first principles**: alpha = 3.3-7.5 (conservative to optimistic)
 - CapEx savings: **20-40% vs D2EHPA** (replaces single-point 70.8% claim; alpha assumed, not experimentally validated)
